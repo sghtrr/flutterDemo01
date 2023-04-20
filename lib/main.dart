@@ -52,7 +52,7 @@ class _ScoffoldState extends State<Scoffold> {
               ),
               onTap: () {
                 setState(() {
-                  _currentIndex = 2;
+                  // _currentIndex = 2;
                 });
               },
             ),
