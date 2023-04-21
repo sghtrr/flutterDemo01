@@ -6,7 +6,11 @@ import 'pages/tabs/setting.dart';
 import 'pages/tabs/message.dart';
 
 void main() {
-  runApp(const MaterialApp(home: Scoffold()));
+  runApp(MaterialApp(
+      debugShowCheckedModeBanner: false, // 去掉debug图标
+      title: 'my flutter', // app在手机最近程序时显式的名字
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const Scoffold()));
 }
 
 class Scoffold extends StatefulWidget {
@@ -28,7 +32,21 @@ class _ScoffoldState extends State<Scoffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Flutter")),
+      appBar: AppBar(
+        title: const Text("Pets viewer"),
+        actions: [
+          IconButton(
+              onPressed: () {
+                print("search");
+              },
+              icon: const Icon(Icons.search)),
+          IconButton(
+              onPressed: () {
+                print("more");
+              },
+              icon: const Icon(Icons.more_horiz)),
+        ],
+      ),
       drawer: Drawer(
         child: Column(
           children: [
