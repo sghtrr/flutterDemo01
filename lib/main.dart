@@ -4,13 +4,43 @@ import 'pages/tabs/home.dart';
 import 'pages/tabs/people.dart';
 import 'pages/tabs/setting.dart';
 import 'pages/tabs/message.dart';
+import 'pages/search.dart';
+import 'pages/more.dart';
 
 void main() {
+  // 命名路由传值step1：配置routes，有参数的需要加上命名参数{arguments}
+  Map routes = {
+    "/": (context) => const Scoffold(),
+    "/search": (context) => const SearchPage(),
+    "/more": (context, {arguments}) => MorePage(arguments: arguments)
+  };
+
   runApp(MaterialApp(
-      debugShowCheckedModeBanner: false, // 去掉debug图标
-      title: 'my flutter', // app在手机最近程序时显式的名字
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const Scoffold()));
+    debugShowCheckedModeBanner: false, // 去掉debug图标
+    title: 'my flutter', // app在手机最近程序时显式的名字
+    theme: ThemeData(primarySwatch: Colors.blue),
+    initialRoute: "/",
+    // 命名路由传值step2：配置onGenerateRoute方法，写法基本固定，判断是否有参数，来调用路由
+    onGenerateRoute: (RouteSettings settings) {
+      final String? name = settings.name;
+      final Function? pageContentBuilder = routes[name];
+
+      if (pageContentBuilder != null) {
+        if (settings.arguments != null) {
+          final Route route = MaterialPageRoute(
+              builder: (contetxt) =>
+                  pageContentBuilder(contetxt, arguments: settings.arguments));
+          return route;
+        } else {
+          final Route route = MaterialPageRoute(
+              builder: (contetxt) => pageContentBuilder(contetxt));
+          return route;
+        }
+      }
+      return null;
+    },
+    // home: const Scoffold()
+  ));
 }
 
 class Scoffold extends StatefulWidget {
@@ -37,12 +67,21 @@ class _ScoffoldState extends State<Scoffold> {
         actions: [
           IconButton(
               onPressed: () {
-                print("search");
+                // Navigator.of(context)
+                //     .push(MaterialPageRoute(builder: (BuildContext context) {
+                //   return const SearchPage();
+                // }));
+                Navigator.pushNamed(context, "/search");
               },
               icon: const Icon(Icons.search)),
           IconButton(
               onPressed: () {
-                print("more");
+                // Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (BuildContext context) =>
+                //         const MorePage(Text("passed message... More"))));
+                // 命名路由传值step4：调用路由的地方，如需参数，加上arguments，类型为键值对的Map
+                Navigator.pushNamed(context, "/more",
+                    arguments: {"widget": const Text("命名路由传值 more...")});
               },
               icon: const Icon(Icons.more_horiz)),
         ],
