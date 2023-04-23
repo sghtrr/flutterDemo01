@@ -8,6 +8,28 @@ class UserRegisterPage2 extends StatefulWidget {
 }
 
 class _UserRegisterPage2State extends State<UserRegisterPage2> {
+  void confirmPhoneNumberDialog() async {
+    String result = await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("confirm message"),
+          content: const Text("confirm your phoneNumber"),
+          actions: [buildTextButton("OK", "0"), buildTextButton("Cancel", "1")],
+        );
+      },
+    );
+
+    result == "0" ? Navigator.pushNamed(context, "/userRegister3") : null;
+  }
+
+  Widget buildTextButton(String text, String result) {
+    return TextButton(
+      onPressed: () => Navigator.of(context).pop(result),
+      child: Text(text),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +48,7 @@ class _UserRegisterPage2State extends State<UserRegisterPage2> {
                 child: InputChip(label: Text("Enter the code you received"))),
           ),
           ElevatedButton(
-              onPressed: () =>
-                  Navigator.pushNamed(context, "/userRegister3"),
-              child: const Text("Next..."))
+              onPressed: confirmPhoneNumberDialog, child: const Text("Next..."))
         ],
       ),
     );

@@ -8,6 +8,30 @@ class UserRegisterPage1 extends StatefulWidget {
 }
 
 class _UserRegisterPage1State extends State<UserRegisterPage1> {
+  void confirmAccountPasswordDialog() async {
+    String result = await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("confirm message"),
+          content: const Text("confirm your account and password"),
+          actions: [buildTextButton("OK", "0"), buildTextButton("Cancel", "1")],
+        );
+      },
+    );
+
+    result == "0"
+        ? Navigator.pushReplacementNamed(context, "/userRegister2")
+        : null;
+  }
+
+  Widget buildTextButton(String text, String result) {
+    return TextButton(
+      onPressed: () => Navigator.of(context).pop(result),
+      child: Text(text),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,8 +48,8 @@ class _UserRegisterPage1State extends State<UserRegisterPage1> {
             title: Center(child: InputChip(label: Text("Enter your password"))),
           ),
           ElevatedButton(
-              onPressed: () => Navigator.pushReplacementNamed(context,
-                  "/userRegister2"), // 使用pushReplacementNamed来替换当前页面，达到返回时跳过此页面的效果
+              onPressed:
+                  confirmAccountPasswordDialog, // 使用pushReplacementNamed来替换当前页面，达到返回时跳过此页面的效果
               child: const Text("Next...")),
         ],
       ),

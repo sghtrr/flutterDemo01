@@ -23,10 +23,13 @@ class _UserRegisterPage3State extends State<UserRegisterPage3> {
             title: Center(child: Text("congratulations!")),
           ),
           ElevatedButton(
-              onPressed: () => Navigator.of(context).pushAndRemoveUntil(
-                  CupertinoPageRoute(
-                      builder: (BuildContext context) => const MyScaffold(index: 4)),
-                  (route) => false),
+              onPressed: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                    CupertinoPageRoute(
+                        builder: (BuildContext context) =>
+                            const MyScaffold(index: 4)),
+                    (route) => false);
+              },
               child: const Text("finish"))
         ],
       ),
