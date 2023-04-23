@@ -6,7 +6,8 @@ import './tabs/setting.dart';
 import './tabs/message.dart';
 
 class MyScaffold extends StatefulWidget {
-  const MyScaffold({super.key});
+  final int index;
+  const MyScaffold({super.key, this.index = 0});
 
   @override
   State<MyScaffold> createState() => _MyScaffoldState();
@@ -21,6 +22,13 @@ class _MyScaffoldState extends State<MyScaffold> {
     GamePage(),
     SettingsPage()
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.index;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
