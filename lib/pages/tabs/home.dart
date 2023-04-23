@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage>
     _imageFactory(src: "https://www.itying.com/images/flutter/2.png"),
     _imageFactory(src: "https://www.itying.com/images/flutter/3.png")
   ];
-  int currentIndex = 0;
+  int _currentIndex = 0;
 
   @override
   void initState() {
@@ -83,7 +83,7 @@ class _HomePageState extends State<HomePage>
                       PageView.builder(
                         onPageChanged: (index) {
                           setState(() {
-                            currentIndex = index;
+                            _currentIndex = index;
                           });
                         },
                         scrollDirection: Axis.horizontal,
@@ -113,7 +113,7 @@ class _HomePageState extends State<HomePage>
                                       child: CircleAvatar(
                                           radius: 4,
                                           backgroundColor:
-                                              currentIndex % 3 == index
+                                              _currentIndex % 3 == index
                                                   ? Colors.blue
                                                   : Colors.grey),
                                     ))),
