@@ -7,6 +7,7 @@ import '../pages/myscaffold.dart';
 import '../pages/userRegister1.dart';
 import '../pages/userRegister2.dart';
 import '../pages/userRegister3.dart';
+import '../pages/hotVideo.dart';
 
 // 命名路由传值step1：配置routes，有参数的需要加上命名参数{arguments}
 Map routes = {
@@ -16,6 +17,7 @@ Map routes = {
   "/userRegister1": (context) => const UserRegisterPage1(),
   "/userRegister2": (context) => const UserRegisterPage2(),
   "/userRegister3": (context) => const UserRegisterPage3(),
+  "/hotVideo": (context) => const HotVideoPage(),
 };
 
 // 命名路由传值step2：配置onGenerateRoute方法，写法基本固定，判断是否有参数，来调用路由

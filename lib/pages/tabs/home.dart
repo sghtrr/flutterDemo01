@@ -11,6 +11,12 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  List<Widget> imageList = [
+    _imageFactory(src: "https://www.itying.com/images/flutter/1.png"),
+    _imageFactory(src: "https://www.itying.com/images/flutter/2.png"),
+    _imageFactory(src: "https://www.itying.com/images/flutter/3.png")
+  ];
+  int currentIndex = 0;
 
   @override
   void initState() {
@@ -68,8 +74,57 @@ class _HomePageState extends State<HomePage>
         controller: _tabController,
         children: [
           KeepAliveWrapper(
-              child: ListView(
-            children: const [ListTile(title: Text("我是热门内容"))],
+              child: Column(
+            children: [
+              SizedBox(
+                  height: 200,
+                  child: Stack(
+                    children: [
+                      PageView.builder(
+                        onPageChanged: (index) {
+                          setState(() {
+                            currentIndex = index;
+                          });
+                        },
+                        scrollDirection: Axis.horizontal,
+                        key: const PageStorageKey('myPageView'),
+                        // controller: PageController(viewportFraction: 0.8),
+                        itemBuilder: (context, index) {
+                          final int actualIndex = index % 3;
+                          return Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 20),
+                            child: Center(
+                              child: imageList[actualIndex],
+                            ),
+                          );
+                        },
+                      ),
+                      Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 2,
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(
+                                imageList.length,
+                                (index) => Padding(
+                                      padding: const EdgeInsets.all(5),
+                                      child: CircleAvatar(
+                                          radius: 4,
+                                          backgroundColor:
+                                              currentIndex % 3 == index
+                                                  ? Colors.blue
+                                                  : Colors.grey),
+                                    ))),
+                      )
+                    ],
+                  )),
+              const ListTile(title: Text("我是热门内容")),
+              ElevatedButton(
+                  onPressed: () => Navigator.of(context).pushNamed("/hotVideo"),
+                  child: const Text("热门视频")),
+            ],
           )),
           // 使用自定义的状态缓存组件来包裹Widget，可以在tab切换过程中保留原tab状态
           KeepAliveWrapper(
@@ -110,5 +165,18 @@ class _HomePageState extends State<HomePage>
         ],
       ),
     );
+  }
+
+  static _imageFactory(
+      {double height = 200,
+      double width = double.infinity,
+      required String src}) {
+    return SizedBox(
+        height: height,
+        width: width,
+        child: Image.network(
+          src,
+          fit: BoxFit.cover,
+        ));
   }
 }
